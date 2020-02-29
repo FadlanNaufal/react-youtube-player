@@ -8,7 +8,7 @@ export default class App extends React.Component {
 
     state = {
         video: [],
-        selectedVideo : null
+        selectedVideo: null
     }
 
     onTermSubmit = async term => {
@@ -18,14 +18,15 @@ export default class App extends React.Component {
             }
         })
         this.setState({
-            video : response.data.items
+            video: response.data.items,
+            selectedVideo : response.data.items[0]
         })
         console.log('Hasil Video', this.state.video)
     }
 
-    onVideoSelect = video =>{
+    onVideoSelect = video => {
         this.setState({
-            selectedVideo : video
+            selectedVideo: video,
         })
     }
 
@@ -33,9 +34,17 @@ export default class App extends React.Component {
         return (
             <div className="ui container">
                 <Searchbar onFormSubmit={this.onTermSubmit} />
-                <VideoDetail video={this.state.selectedVideo} />
-                <VideoList onVideoSelect={this.onVideoSelect}  videos={this.state.video} />
-            </div> 
+                <div className="ui grid">
+                    <div className="ui row">
+                        <div className="eleven wide column">
+                            <VideoDetail video={this.state.selectedVideo} />
+                        </div>
+                        <div className="five wide column">
+                            <VideoList onVideoSelect={this.onVideoSelect} videos={this.state.video} />
+                        </div>
+                    </div>
+                </div>
+            </div>
         )
     }
 }
